@@ -1,0 +1,158 @@
+.section-header {
+    display: block;
+    margin-top: 20px;
+    position: relative;
+    text-align: center;
+}
+
+section {
+    overflow: hidden;
+    position: relative;
+}
+
+
+.Carousel-slider {
+    height: 560px;
+    position: relative;
+    width: 100%;
+}
+
+.Carousel-slider.fullwidth {
+    height: 500px;
+}
+
+.Carousel-slider.fullwidth .slider-item {
+    height: 480px;
+    line-height: 480px;
+    width: 100%
+}
+
+.slider-wrapper {
+    overflow: hidden;
+    position: relative;
+    transform-style: preserve-3d;
+    transform-origin: 0 50%;
+    perspective: 800px !important;
+}
+
+.slider-item {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .12);
+    display: none;
+    height: 320px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 320px;
+    cursor: pointer;
+    border: 2px solid #800000;
+}
+
+.indicators {
+    top: 0;
+    left: 48%;
+    padding: 0;
+    list-style-type: none;
+    margin: 40px 0 0 -77px;
+    position: absolute;
+}
+
+.indicators li {
+    color: #800000;
+    float: left;
+    height: 16px;
+    margin-right: 8px;
+    text-align: center;
+    width: 16px;
+}
+
+.indicators li:last-child {
+    margin: 0;
+}
+
+.indicators a {
+    background: #800000;
+    border-radius: 8px;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+.indicators .active a {
+    background: #e4e5e6;
+
+}
+
+.superHero1 {
+
+    border-radius: 50px !important;
+}
+
+.superHero2 {
+    background: url(images/Website/Services/JGInfinit42.jpg);
+    border-radius: 50px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.superHero3 {
+    background: url(images/Website/Services/JGInfinit43.jpg);
+    border-radius: 50px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.superHero4 {
+    background: url(images/Website/Services/JGInfinit44.jpg);
+    border-radius: 50px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.superHero5 {
+    background: url(images/Website/Services/JGInfinit49.jpg);
+    border-radius: 50px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.superHero6 {
+    background: url(images/Website/Services/JGInfinit50.jpg);
+    border-radius: 50px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.superHero7 {
+    background: url(images/Website/Services/JGInfinit53.jpg);
+    border-radius: 50px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.superHero8 {
+    background: url(images/Website/Services/JGInfinit56.jpg);
+    border-radius: 50px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.superHero9 {
+    background: url(images/Website/Services/JGInfinit60.jpg);
+    border-radius: 50px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-width:657px){
+    .indicators {
+        top: 0;
+        left: 45%;
+    }
+}
