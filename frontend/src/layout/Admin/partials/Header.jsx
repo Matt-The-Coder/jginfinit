@@ -19,7 +19,7 @@ export const Header = React.memo(() => {
         <div className="flex w-full h-full container">
             <div className="flex justify-start w-1/2 items-center ml-4 container2">
                 <Link to="/admin">
-                <img className=" object-contain h-24 w-24" src="/public/images/img/logo_red.png" alt="" />
+                <img className=" object-contain h-24 w-24" src="/images/img/logo_red.png" alt="" />
                 </Link>
            
             </div>
