@@ -28,20 +28,7 @@
   .buttonForms{
       margin-top: 10px;
   }
-  .buttonForms button{
-      margin: 0px 5px;
-      padding: 6px  11px;
-      cursor: pointer;
-      background-color: var(--header-footer-bg);
-      border-radius: 15px;
-      box-shadow: 1px 1px 3px black;
-  }
-  #inputBorder{
-      border: 1px solid black;
-      border-radius: 4px;
-      padding: 3.5px 2px;
-  }
-  
+
   
   
   @media print {
@@ -59,6 +46,7 @@
     .header{
       justify-content: center;
       position: static;
+      border: none;
     }
  .header .container{
     justify-content: center !important;
@@ -79,16 +67,24 @@
     .breadcrumbs{
       display: none;
     }
+    .calculation{
+      margin-top: 2em;
+    }
+    .footer{
+      bottom: -4em;
+      border-bottom: 0;
+    }
   }
   
-  
+  @media screen and (max-width:378px) {
+    .quotePage{
+      padding: 15px 10px;
+    }
+  }
   @media screen and (min-width: 300px) and (max-width: 1080px)  {
   
   
    
-      .quotePage .carTitle h1{
-          font-size: 20px;
-      }
       .quotePage .tableForm{
           font-size: 14px;
       }

@@ -8,6 +8,7 @@ const Calculateform = ({carType, amount, carParams, setCarType, clientName, prep
        
         const changeValue = () => {
             const initAmount = initialAmountInput.current.value;
+            console.log(initAmount)
             const rateAmount = rateInput.current.value;
             const calculatedRateAmount = rateAmount!==""? rateAmount * 0.01: 0 * 0.01;
             const totalAmount = (initAmount == "" ? 0 * calculatedRateAmount : parseFloat(initAmount) * calculatedRateAmount ).toFixed(2); // Format to two decimal places as a string
@@ -51,172 +52,136 @@ const Calculateform = ({carType, amount, carParams, setCarType, clientName, prep
           
         return(<>
             <div className="carTitle">
-            <h1>{carParams == 'pv'? 'Personal Vehicle (5-Seater SEDAN)': 
+            <h1 className="font-bold text-2xl text-center">{carParams == 'pv'? 'Personal Vehicle (5-Seater SEDAN)': 
             carParams == 'cvsuv'?'Commercial Vehicle (7-Seater SUV)':
             carParams == 'cvlt'? 'Commercial Vehicle (Light Truck)':
             carParams == 'cvht'? 'Commercial Vehicle (Heavy Truck':
-            'Commercial Vehicle (Heavy Truck +Surcharge)' }</h1>
+            'Commercial Vehicle (Heavy Truck + Surcharge)' }</h1>
         </div>
-      <div className="tableForm">
-        <table>
-            <thead>
-            <tr id="thead">
-                <th>Client</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-           <tbody>
-            <tr>
-                <td>
-                    <label htmlFor="Name">Name: </label>
-                    <input type="text" ref={clientName} onChange={()=>{setClient({
-                         name: clientName.current.value,
-                         unit: clientUnit.current.value,
-                         preparedBy: preparedPerson.current.value
-                    })}}/>
-                </td>
-            </tr>
-            <tr>
-            <td>
-                    <label htmlFor="Unit">Unit: </label>
-                    <input type="text" ref={clientUnit} onChange={()=>{setClient({
+        <div className="calculation w-full flex flex-col justify-center items-center mt-4">
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300">
+            <div className=" text-lg font-semibold">
+                <p  className="ml-28">Client</p>
+                 
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300">
+            <div className=" text-lg font-semibold">
+                 Name: <input type="text" className="ml-1 text-lg border-none w-3/4 font-[400]" ref={clientName} onChange={()=>{setClient({
                          name: clientName.current.value,
                          unit: clientUnit.current.value,
                          preparedBy: preparedPerson.current.value
                     })}} />
-                </td>
-            </tr>
-            <tr>
-            <td>
-                    <label htmlFor="PreparedBy">Prepared by: </label>
-                    <input type="text" ref={preparedPerson} onChange={()=>{setClient({
-                         name: clientName.current.value,
-                         unit: clientUnit.current.value,
-                         preparedBy: preparedPerson.current.value
-                    })}} />
-                </td>
-            </tr>
-            <tr id="thead">
-                <th>Coverage</th>
-                <th>Amount</th>
-                <th>Premium</th>
-            </tr>
-            <tr>
-                <td>
-                    <p>- Own Damage</p>
-                    <p>- Theft</p>
-                    <p>- Acts of Nature</p>
-                </td>
-                <td>
-                    <label htmlFor="pesoSign">₱ </label>
-                    <input type="text" id="inputBorder" ref={initialAmountInput} onChange={changeValue} />
-                </td>
-                <td>
-                    <label htmlFor="pesoSign">₱ </label> 
-                    <label>{carType.cPremiumAmount}</label>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <label htmlFor="rate">Rate </label>
-                    <input type="text" value={carType.cRate} id="inputBorder" ref={rateInput} onChange={changeValue} />
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                <p>- Body Injured</p>
-                </td>
-                <td>
-                <p>₱200000.00</p>
-                </td>
-                <td>
-                <label htmlFor="pesosign">₱ </label>
-                <input type="text" value={carType.cBodyInjured} readOnly />
-                </td>
-               
-            </tr>
-            <tr>
-                 <td>
-                <p>- Property Damage</p>
-                </td>
-                <td>
-                <p>₱200000.00</p>
-                </td>
-                <td>
-                <label htmlFor="pesosign">₱ </label>
-                <input type="text" value={carType.cPropertyDamage} readOnly/>
-                </td>
-               
-            </tr>
-            <tr>
-            <td>
-                <p>- Passenger Accident</p>
-                </td>
-                <td>
-                <p>₱200000.00</p>
-                </td>
-                <td>
-                <label htmlFor="pesosign">₱ </label>
-                <input type="text" value={carType.cPassengerAccident} readOnly />
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <p>ANNUAL PREMIUM</p>
-                </td>
-                <td>
-                <label htmlFor="pesosign">₱ </label>
-                <input type="text" value={carType.cAnnualPremium} ref={annualPremiumInput} readOnly/>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <p>Document Stamps</p>
-                </td>
-                <td>
-                <label htmlFor="pesosign">₱ </label>
-                <input type="text" value={carType.cDocumentStamps} ref={documentStampsInput} readOnly />
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <p>E-VAT</p>
-                </td>
-                <td>
-                <label htmlFor="pesosign">₱ </label>
-                <input type="text" value={carType.cEVat} ref={eVatInput} readOnly/>
-                </td>
-            </tr>
-            <tr>
-                 <td></td>
-                <td>
-                    <p>LGT (Local Government Tax)</p>
-                </td>
-                <td>
-                <label htmlFor="pesosign">₱ </label>
-                <input type="text" value={carType.cLgt} ref={lgtInput} readOnly/>
-                </td>
-            </tr>
-            <tr>
-                 <td></td>
-                <td>
-                    <h4>GROSS PREMIUM</h4>
-                </td>
-                <td>
-                <label htmlFor="pesosign">₱ </label>
-                <input type="text" value={carType.cGrossPremium} readOnly/>
-                </td>
-            </tr>
-                    
-           </tbody>
-        </table>
-      </div>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300">
+            <div className=" text-lg font-semibold">
+                 Unit: <input type="text" className="ml-1 text-lg border-none w-3/4 font-[400]" 
+                 ref={clientUnit} onChange={()=>{setClient({
+                    name: clientName.current.value,
+                    unit: clientUnit.current.value,
+                    preparedBy: preparedPerson.current.value
+               })}} />
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300">
+            <div className=" text-lg font-semibold flex sm:block">
+                 Prepared By: <input type="text" className="ml-1 text-lg border-none w-3/4 font-[400]" 
+                 ref={preparedPerson} onChange={()=>{setClient({
+                    name: clientName.current.value,
+                    unit: clientUnit.current.value,
+                    preparedBy: preparedPerson.current.value
+               })}}/>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <p>Coverage</p>
+                 <p>Amount</p>
+                 <p>Premiuim</p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <ul className="w-[33%]">
+                    <li>- Own Damage</li>
+                    <li>- Theft</li>
+                    <li>- Acts of Nature</li>
+                 </ul>
+                 <p className="w-[33%] flex gap-1 items-center">
+                    <label htmlFor="">₱ </label>
+                    <input type="number" inputMode="numeric" className="rounded-lg w-full" ref={initialAmountInput} onChange={changeValue}/>
+                 </p>
+                 <p className="w-[33%] text-center flex gap-1 justify-center">
+                 <label htmlFor="">₱ </label>
+                    {carType.cPremiumAmount}</p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-center items-center">
+                Rate: <input type="number" inputMode="numeric"  value={carType.cRate}  
+                className="ml-2 rounded-lg"
+                ref={rateInput} onChange={changeValue} />
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <p className="w-[33%]">- Body Injured</p>
+                 <p className="w-[33%]">₱ 200000.00</p>
+                 <p className="w-[33%] text-center">₱ {carType.cBodyInjured} </p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <p className="w-[33%]">- Property Damaged</p>
+                 <p className="w-[33%]">₱ 200000.00</p>
+                 <p className="w-[33%] text-center">₱ {carType.cPropertyDamage} </p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <p className="w-[33%]">- Passenger Accident</p>
+                 <p className="w-[33%]">₱ 200000.00</p>
+                 <p className="w-[33%] text-center"> ₱ {carType.cPassengerAccident}</p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <p className="w-[33%]"></p>
+                 <p className="w-[33%]">ANNUAL PREMIUM</p>
+                 <p className="w-[33%] text-center">₱ {carType.cAnnualPremium} </p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <p className="w-[33%]"></p>
+                 <p className="w-[33%]">Document Stamps</p>
+                 <p className="w-[33%] text-center">₱ {carType.cDocumentStamps} </p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <p className="w-[33%]"></p>
+                 <p className="w-[33%]">E-VAT</p>
+                 <p className="w-[33%] text-center">₱ {carType.cEVat}</p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-around items-center">
+                 <p className="w-[33%]"></p>
+                 <p className="w-[33%]">LGT (Local Government Tax)</p>
+                 <p className="w-[33%] text-center">₱ {carType.cLgt} </p>
+            </div>
+            </div>
+            <div className="w-full md:w-3/4 h-auto py-2 px-4 border-b border-b-neutral-300 ">
+            <div className=" text-lg font-semibold flex justify-evenly items-center">
+                 <p className="w-[33%]"></p>
+                 <p className="w-[33%]">GROSS PREMIUM</p>
+                 <p className="w-[33%] text-center">₱ {carType.cGrossPremium}</p>
+            </div>
+            </div>
+        </div>
+
         </>)
     }
     

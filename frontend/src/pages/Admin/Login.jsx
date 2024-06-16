@@ -44,7 +44,7 @@ const auth = getAuth();
               className="object-contain h-full w-full " />
           </div>
           <div className="section_2 w-full lg:w-1/2">
-            <div className=" bg-white border-l h-full  dark:bg-neutral-900 dark:border-neutral-700">
+            <div className=" bg-white border-l h-auto dark:bg-neutral-900 dark:border-neutral-700">
               <div className="p-4 sm:p-7 h-full">
                 <div className="lg:hidden logo grid place-items-center">
                   <img src="/images/img/logo_red.png" alt="Logo" className="w-28 h-28" />
