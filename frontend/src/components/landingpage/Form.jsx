@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import TermsCondition from "./TermsCondition";
 import PhoneInput from "react-phone-input-2";
 import { auth } from "../../firebase/setup";
@@ -6,7 +6,7 @@ import OtpPage from "../../pages/Client/OtpPage";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import "react-phone-input-2/lib/material.css";
 import axios from 'axios'
-const Form = () => {
+const Form = ({ setLoading }) => {
   const hostServer = import.meta.env.VITE_HOSTSERVER
   const [hidden, setHidden] = useState(false);
   const [user, setUser] = useState(null);
@@ -16,6 +16,36 @@ const Form = () => {
   const [year, setYear] = useState("")
   const [transmission, setTransmission] = useState("")
   const [phone, setPhone] = useState("")
+  const [brandInput, setBrandInput] = useState('')
+  const [carBrands, setCarBrands] = useState([])
+  const [pickedCar, setpickedCar] = useState([])
+
+  const getCarBrands = async () => {
+    try {
+      setLoading(true)
+      const result = await axios.get(`${hostServer}/numtables`)
+      const data = result.data
+      setCarBrands(data)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+  const handleBrandSelect = async (val) => {
+    try {
+      setLoading(true)
+      setBrandInput(val)
+      const result = await axios.get(`${hostServer}/${val}`)
+      const data = result.data
+      setpickedCar(data)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+
+  }
 
   const getQuote = async (e) => {
 
@@ -28,7 +58,7 @@ const Form = () => {
       setUser("confirmation");
       const verification = "confirmation"
       console.log(verification)
-      
+
       const data = axios.post(`${hostServer}/otpData`, {
         name,
         model,
@@ -36,26 +66,26 @@ const Form = () => {
         year,
         transmission,
         phone,
-        ConfirmationResultImpl:verification
+        ConfirmationResultImpl: verification
       })
-      
+
     } catch (error) {
       console.log(error)
     }
 
   }
 
+  useLayoutEffect(() => {
+    getCarBrands()
+  }, [])
 
-  useEffect(() => {
 
-    console.log(model)
-  }, [model])
 
   return (
     <>
-    {hidden && <>
-      <OtpPage user={user}/>
-    </>}
+      {hidden && <>
+        <OtpPage user={user} />
+      </>}
 
       <section
         className="h-[155vh] md:h-[100vh] flex items-center justify-center bg-gray-50"
@@ -142,7 +172,7 @@ const Form = () => {
                               Name
                             </label>
                             <input
-                            required
+                              required
                               value={name}
                               onChange={(e) => { setName(e.currentTarget.value) }}
                               id="name"
@@ -152,21 +182,43 @@ const Form = () => {
                             />
                           </div>
                         </div>
+                        <div>
+                          <div className="relative">
+                            <label htmlFor="" for="name">
+                              Car Brand
+                            </label>
+                            <div className="relative mt-2 ">
+                              <select
+                                required
+                                value={brandInput}
+                                onChange={(e) => {
+                                  handleBrandSelect(e.currentTarget.value)
+                                }} className="py-3 px-4 pe-9 block w-full border-gray-200
+                               rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                                <option selected>Select Car Brand</option>
+                                {carBrands?.map((val, i) => {
+                                  return <option key={val.TABLE_NAME} value={val.TABLE_NAME}>{val.TABLE_NAME.toUpperCase()}</option>
+                                })}
+                              </select>
 
+                            </div>
+                          </div>
+                        </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
                           <div>
                             <label htmlFor="carModel">Car Model</label>
                             <div className="relative mt-2 ">
                               <select
-                              required
+                                required
                                 value={model}
                                 onChange={(e) => { setModel(e.currentTarget.value) }} className="py-3 px-4 pe-9 block w-full border-gray-200
                                rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                                 <option selected disabled>Select Model</option>
-                                <option value="Vrand">Brand</option>
-                                <option value="email">Email address</option>
-                                <option>Description</option>
-                                <option>User ID</option>
+                                {pickedCar?.filter((val, i, arr) => {
+                                  return i == arr.findIndex((obj) => { return obj.v_model == val.v_model })
+                                }).map((val, i) => {
+                                  return <option key={val.v_id} value={val.v_model}>{val.v_model}</option>
+                                })}
                               </select>
 
                             </div>
@@ -177,15 +229,22 @@ const Form = () => {
                             </label>
                             <div className="relative mt-2 ">
                               <select
-                              required
+                                required
                                 value={variant}
                                 onChange={(e) => { setVariant(e.currentTarget.value) }} className="py-3 px-4 pe-9 block w-full border-gray-200
                                rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                                 <option selected disabled>Select Variant</option>
-                                <option value="Vrand">Brand</option>
-                                <option value="email">Email address</option>
-                                <option>Description</option>
-                                <option>User ID</option>
+                                {
+                                  pickedCar?.filter((val) => {
+                                    return val.v_model === model
+                                  }).filter((val, index, array) => {
+                                    return array.findIndex((obj) => { return obj.v_variant == val.v_variant }) === index
+                                  }).map((val) => {
+                                    {
+                                      return <option key={val.v_id} value={val.v_variant}>{val.v_variant}</option>
+                                    }
+                                  })
+                                }
                               </select>
                             </div>
                           </div>
@@ -196,14 +255,19 @@ const Form = () => {
                             </label>
                             <div className="relative mt-2 ">
                               <select value={year}
-                              required
+                                required
                                 onChange={(e) => { setYear(e.currentTarget.value) }} className="py-3 px-4 pe-9 block w-full border-gray-200
                                rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                                 <option selected disabled>Select Year</option>
-                                <option value="Vrand">Brand</option>
-                                <option value="email">Email address</option>
-                                <option>Description</option>
-                                <option>User ID</option>
+                                {
+                                  pickedCar?.filter((val) => {
+                                    return val.v_variant === variant
+                                  }).map((val) => {
+                                    {
+                                      return <option key={val.v_id} value={val.v_year}>{val.v_year}</option>
+                                    }
+                                  })
+                                }
                               </select>
                             </div>
                           </div>
@@ -212,7 +276,7 @@ const Form = () => {
                             <label htmlFor="carModelVariant">AT or MT</label>
                             <div className="relative mt-2 ">
                               <select id="hs-select-label"
-                              required
+                                required
                                 value={transmission}
                                 onChange={(e) => { setTransmission(e.currentTarget.value) }}
                                 className="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
@@ -231,7 +295,7 @@ const Form = () => {
                               Mobile Number
                             </label>
                             <PhoneInput
-                            required
+                              required
                               value={phone}
                               onChange={(phone) => {
                                 setPhone("+" + phone);
@@ -276,7 +340,7 @@ const Form = () => {
                               <TermsCondition />
                             </label>
                           </div>
-                          
+
                         </div>
                         <div className="recaptcha" id="recaptcha"></div>
                         <div className="mt-5">

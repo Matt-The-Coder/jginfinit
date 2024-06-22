@@ -8,7 +8,8 @@ import {
     Footer
 } from '../../components/landingpage/component';
 
-const Homepage = () => {
+const Homepage = ({setLoading}) => {
+  console.log('homepage')
     return (
       <>
         <Navbar/>     
@@ -17,7 +18,7 @@ const Homepage = () => {
                 <HeroSection/>
                 <Services />
                 <Video />
-                <Form />
+                <Form setLoading={setLoading} />
                 <About />
             </article>
         </main>

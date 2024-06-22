@@ -3,6 +3,7 @@ const Video = () => {
   const vidRef = useRef();
 
   useEffect(() => {
+    console.log('video')
     vidRef.current.play();
   }, []);
   return (

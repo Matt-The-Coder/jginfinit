@@ -57,7 +57,7 @@ function App() {
 <div className="loading fixed bg-neutral-600 w-lvw h-lvh top-0 z-[60] opacity-45"></div>
     </>}
     <Routes>
-      <Route path='/' element={<Homepage/>} />
+      <Route path='/' element={<Homepage setLoading={setLoading}/>} />
       <Route path='/services' element={<Services/>} />
       <Route path='/phoneauth' element={<Phoneauth/>} />
       <Route path='/verify' element={<OtpPage/>} />
